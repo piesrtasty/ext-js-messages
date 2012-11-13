@@ -15,7 +15,7 @@
 - - -
 
 #### Additional Requirements
-*Of Higher Level Conceptualal Nature*
+*Of Higher Level Conceptual Nature*
 
 <ol>
 	<li>The application must be both useable on an iPhone and an Android phone</li>
@@ -24,5 +24,5 @@
 	<br/>
 	<li>The application must be accessible via both mobile devices and desktop browsers. (However desktop brower's do not require a geo-location component to be implemented).</li>
 	<br/>
-	<li>The application must be hosted on a PaaS provider.</li>
+	<li>The application must be hosted on a PaaS provider	.</li>
 </ol>
