@@ -38,7 +38,7 @@ Ext.define('Messages.controller.Messages', {
 
 	},
 
-	onMessageFieldKeyup: function(field, event) {
+	onMessageFieldKeyup: function (field, event) {
 		var ENTER_KEY_CODE = 13;
 		var value = field.getValue().trim();
 		if (event.keyCode === ENTER_KEY_CODE && value !== '') {
@@ -47,8 +47,76 @@ Ext.define('Messages.controller.Messages', {
 			field.reset();
 			store.sync();
 		}
-	}
+	},
 
+	onMessageChecked: function (record) {
+		record.set('checked', !record.get('checked'));
+		record.store.sync();
+		record.commit();
+	},
+
+	onMessageDblClicked: function (list, record, el) {
+		record.set('editing', true);
+		record.store.sync();
+		record.commit();
+	},
+
+	onMessageRemoveSelected: function (record) {
+		var store = this.getMessagesStore();
+		store.remove(record);
+		store.sync();
+	},
+
+	onMessageEditKeyup: function(event, record, extEl) {
+		var ENTER_KEY_CODE = 13;
+		if (event.keyCode === ENTER_KEY_CODE) {
+			this.finalizeMessageEdit(extEl, record);
+		}
+	},
+
+	finalizeMessageEdit: function (extEl, record) {
+		var value = extEl.getValue().trim();
+
+		if (!value) {
+			var store = this.getMessagesStore();
+			store.sync();
+		} else {
+			record.set('label', value);
+			record.set('editing', false);
+			record.store.sync();
+			record.commit();
+		}
+	},
+
+	onClearButtonClick: function() {
+		var records = [];
+		store = this.getMessagesStore();
+
+		store.each(function(record) {
+			if (record.get('checked')) {
+				records.push(record);
+			}
+		});
+		store.remove(records);
+		store.sync();
+	},
+
+	onCheckAllClick: function(checked) {
+		var store = this.getMessagesStore();
+		store.each(function(record) {
+			record.set('checked', checked);
+		});
+		store.sync();
+	},
+
+	onStoreDataChanged: function() {
+		var info = '', text = '',
+		store = this.getMessagesStore(),
+		totalCount = store.getCount(),
+		toolbar = this.getMessageToolbar(),
+		button = toolbar.items.first(),
+		container = store.queryBy
+	}
 
 
 
