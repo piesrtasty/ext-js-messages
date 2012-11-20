@@ -115,49 +115,62 @@ Ext.define('Messages.controller.Messages', {
 		totalCount = store.getCount(),
 		toolbar = this.getMessageToolbar(),
 		button = toolbar.items.first(),
-		container = store.queryBy
+		container = store.queryBy(function(record) {
+			return !record.get('checked');
+		}),
+		count = records.getCount();
+		checkedCount = totalCount - count;
+
+		if (count) {
+			info = '<b>' + count + '</b> message' + (count > 1 ? 's' : '') + ' left.';
+		}
+
+		if (checkedCount) {
+			text = 'Clear ' + checkedCount + ' read message' + (checkedCount > 1 ? 's' : '');
+		}
+
+		this.getCheckAllBox().updateCheckedState(totalCount, checkedCount);
+		container.update(info);
+		button.setText(text);
+		button.setVisible(checkedCount);
+		toolbar.setVisible(totalCount);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
